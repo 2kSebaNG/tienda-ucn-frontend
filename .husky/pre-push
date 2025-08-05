@@ -1,0 +1,7 @@
+echo "🟡 Verifying project integrity..."
+npm run knip && npm run build
+if [ $? -ne 0 ]; then
+  echo "🔴 Push blocked: Fix errors before pushing"
+  exit 1
+fi
+echo "🟢 Project verified. Proceeding with push"

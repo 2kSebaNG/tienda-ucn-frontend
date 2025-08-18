@@ -1,8 +1,7 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HomePage() {
+export default function HomeView() {
   return (
     <section className="flex items-center justify-center min-h-screen bg-gray-100 w-full">
       <div className="relative min-h-screen w-full">

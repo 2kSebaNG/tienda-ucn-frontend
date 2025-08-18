@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { UserIcon, MenuIcon, XIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

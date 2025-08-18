@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tienda UCN Frontend
 
-## Getting Started
+This project consists of the simplified implementation of the frontend of the “Tienda UCN” e-commerce platform using Next.js. This includes the creation of views, user session and shopping cart management, proper use of rendering strategies and global states.
 
-First, run the development server:
+The website is created with a mobile-first approach, so that it is responsive to different screen sizes and maintains a pleasant and fluid user experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+In addition, the system is designed to be used in conjunction with a Rest API created with ASP .NET Core, which allows for the management of user and product data.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The following technologies are required to execute the project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Visual Studio Code 1.89.1+](https://code.visualstudio.com/)
+- [Node 22+](https://nodejs.org/es/download)
+- [Git 2.45.1+](https://git-scm.com/downloads)
 
-## Learn More
+Once everything is installed, run the project by following the steps in the next section.
 
-To learn more about Next.js, take a look at the following resources:
+## Quick Start
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository on your computer using CMD.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/2kSebaNG/tienda-ucn-frontend.git
+   ```
 
-## Deploy on Vercel
+2. Navigate to the project folder
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   cd tienda-ucn-frontend
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Open the project using Visual Studio Code
+
+   ```bash
+   code .
+   ```
+
+4. Restore the dependencies on a Visual Studio Code terminal
+   ```bash
+   npm i
+   ```
+5. Execute the project using the same terminal
+   ```bash
+   npm run dev
+   ```
+
+Once you have followed these steps, you will see that the project is running on `http://localhost:3000`. To see the website, press ctrl and click that address.
+
+## Author
+
+- [Sebastián Núñez](https://github.com/2kSebaNG)

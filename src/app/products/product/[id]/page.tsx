@@ -1,16 +1,20 @@
-import { productService } from "@/services/product-service";
-import SingleProductView from "@/views/single-product-view";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { productService } from "@/services";
+import { SingleProductView } from "@/views/app/products/[id]";
+
+interface SingleProductPageProps {
+  params: Promise<{ id: string }>;
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
+}: SingleProductPageProps): Promise<Metadata> {
   const { id } = await params;
 
-  const productDetail = await getProductDetail(id);
+  const response = await getProductDetail(id);
+  const productDetail = response.data;
 
   if (!productDetail) {
     return {
@@ -20,8 +24,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${productDetail.data.brandName} | ${productDetail.data.title} - Tienda UCN`,
-    description: `Detalles del producto ${productDetail.data.title} en Tienda UCN.`,
+    title: `${productDetail.brandName} | ${productDetail.title} - Tienda UCN`,
+    description: `Detalles del producto ${productDetail.title} en Tienda UCN.`,
   };
 }
 
@@ -29,18 +33,15 @@ const getProductDetail = async (id: string) => {
   try {
     const productDetail = await productService.getProductDetail(id);
     return productDetail.data;
-  } catch (error) {
+  } catch {
     notFound();
   }
 };
 
 export default async function SingleProductPage({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: SingleProductPageProps) {
   const { id } = await params;
-  const productDetail = await getProductDetail(id);
 
-  return <SingleProductView productDetail={productDetail} />;
+  return <SingleProductView id={id} />;
 }

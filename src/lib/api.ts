@@ -1,10 +1,3 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
 export const extractErrorMessage = (error: unknown): string => {
   if (
     error &&
@@ -22,9 +15,9 @@ export const extractErrorMessage = (error: unknown): string => {
       const errors = responseData.errors as Record<string, unknown>;
       const allMessages: string[] = [];
 
-      Object.values(errors).forEach((fieldErrors) => {
+      Object.values(errors).forEach(fieldErrors => {
         if (Array.isArray(fieldErrors)) {
-          fieldErrors.forEach((item) => {
+          fieldErrors.forEach(item => {
             if (typeof item === "string") {
               allMessages.push(item);
             }

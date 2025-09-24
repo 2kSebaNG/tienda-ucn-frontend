@@ -1,7 +1,19 @@
 echo "🟡 Running code formatting and checks..."
-npx lint-staged && npx tsc --noEmit --skipLibCheck
+
+# Run lint-staged for staged files (includes lint and format)
+echo "📋 Running lint-staged..."
+npx lint-staged
 if [ $? -ne 0 ]; then
-  echo "🔴 Commit blocked: Fix errors before committing"
+  echo "🔴 Commit blocked: lint-staged failed"
   exit 1
 fi
+
+# Run type checking
+echo "🔧 Type checking..."
+npm run type-check
+if [ $? -ne 0 ]; then
+  echo "🔴 Commit blocked: Type checking failed"
+  exit 1
+fi
+
 echo "🟢 All checks passed. Proceeding with commit"

@@ -1,12 +1,31 @@
-import { ProductParams } from "@/models/products/product-params";
-import { api } from "./api";
-import { ProductDetail } from "../models/products/product-detail";
-import { CustomerProduct } from "@/models/products/customer-product";
+import { AxiosRequestConfig } from "axios";
 
-export const productService = {
-  getProductsForCostumer: (productParams?: ProductParams) =>
-    api.get<CustomerProduct>(`/product/customer/products`, {
-      params: productParams,
-    }),
-  getProductDetail: (id: string) => api.get<ProductDetail>(`/product/${id}`),
-};
+import { ApiResponse } from "@/models/generics";
+import { PaginationQueryParams } from "@/models/requests";
+import {
+  ProductDetailForCustomerResponse,
+  ProductListForCustomerResponse,
+} from "@/models/responses";
+
+import { BaseApiService } from "./base-api-service";
+
+export class ProductService extends BaseApiService {
+  constructor() {
+    super("/product");
+  }
+
+  getProductsForCustomer(params?: PaginationQueryParams) {
+    return this.httpClient.get<ApiResponse<ProductListForCustomerResponse>>(
+      `${this.baseURL}/customer/products`,
+      { params } as AxiosRequestConfig
+    );
+  }
+
+  getProductDetail(id: string) {
+    return this.httpClient.get<ApiResponse<ProductDetailForCustomerResponse>>(
+      `${this.baseURL}/${id}`
+    );
+  }
+}
+
+export const productService = new ProductService();

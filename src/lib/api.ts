@@ -6,7 +6,6 @@ export const handleApiError = (error: unknown): ApiErrorResult => {
   if (error instanceof AxiosError) {
     // Network/connection error
     if (!error.response) {
-      console.log("Network error - no response received");
       return {
         message: "Error de red",
         details: "No se pudo conectar con el servidor",
@@ -16,7 +15,6 @@ export const handleApiError = (error: unknown): ApiErrorResult => {
 
     // Not found error with custom format
     if (error.response.status === 404 && error.response.data) {
-      console.log("Not found error:", error.response.data);
       const errorData = error.response.data as ErrorDetail;
       return {
         message: errorData.message || "Recurso no encontrado",
@@ -27,10 +25,7 @@ export const handleApiError = (error: unknown): ApiErrorResult => {
 
     // Other HTTP errors with custom format
     if (error.response.data && typeof error.response.data === "object") {
-      console.log("HTTP error with custom format:", error.response.data);
-
       if (error.response.data.errors) {
-        console.log("Array of errors:", error.response.data.errors);
         const errors = Object.values(error.response.data.errors)
           .flat()
           .join(", ");

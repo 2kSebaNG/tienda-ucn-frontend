@@ -3,6 +3,7 @@
 import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui";
+import { handleApiError } from "@/lib";
 
 import {
   ProductDetailEmptyState,
@@ -26,7 +27,13 @@ export const SingleProductView = ({ id }: SingleProductViewProps) => {
   }
 
   if (error) {
-    return <ProductErrorState error={error} onRetry={actions.handleRetry} />;
+    return (
+      <ProductErrorState
+        error={handleApiError(error).details ?? ""}
+        canRetry={handleApiError(error).canRetry}
+        onRetry={actions.handleRetry}
+      />
+    );
   }
 
   if (!productDetail) {

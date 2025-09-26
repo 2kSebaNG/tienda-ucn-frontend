@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 
+import { handleApiError } from "@/lib";
 import { ProductForCustomerResponse } from "@/models/responses";
 
 import {
@@ -34,7 +35,11 @@ export default function ProductsView() {
         />
 
         {error && (
-          <ProductsErrorState error={error} onRetry={actions.handleRetry} />
+          <ProductsErrorState
+            error={handleApiError(error).details ?? ""}
+            canRetry={handleApiError(error).canRetry}
+            onRetry={actions.handleRetry}
+          />
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-5 mb-5">
@@ -67,7 +72,9 @@ export default function ProductsView() {
           onPageClick={actions.handlePageClick}
         />
 
-        {products.length === 0 && !isLoading && <ProductsEmptyState />}
+        {products.length === 0 && !isLoading && !error && (
+          <ProductsEmptyState />
+        )}
       </div>
     </Suspense>
   );

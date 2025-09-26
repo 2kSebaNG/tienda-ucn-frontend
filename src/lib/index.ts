@@ -1,3 +1,3 @@
 export { handleApiError } from "./api";
 export { cn } from "./tailwind";
-export { stringRegexValidation } from "./utils";
+export { isValidId } from "./utils";

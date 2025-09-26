@@ -1,6 +1,3 @@
-export const stringRegexValidation = (
-  value: string,
-  regex: RegExp
-): boolean => {
-  return regex.test(value);
+export const isValidId = (id: string): boolean => {
+  return /^[1-9]\d*$/.test(id);
 };

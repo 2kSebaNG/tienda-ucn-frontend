@@ -1,10 +1,8 @@
 import { AxiosError } from "axios";
 
-import { ErrorDetail } from "@/models/generics";
+import { ApiErrorResult, ErrorDetail } from "@/models/generics";
 
-export const handleApiError = (
-  error: unknown
-): ErrorDetail & { canRetry: boolean } => {
+export const handleApiError = (error: unknown): ApiErrorResult => {
   if (error instanceof AxiosError) {
     // Network/connection error
     if (!error.response) {

@@ -36,10 +36,10 @@ Once everything is installed, run the project by following the steps in the next
    code .
    ```
 
-4. Copy the `.env.local` content on the `.env` file.
+4. Copy the `.env.example` content on the `.env` file.
 
    ```bash
-   cp .env.local .env
+   cp .env.example .env
    ```
 
 5. Replace `your-api-url-here` with the base URL of your API on the `NEXT_PUBLIC_API_URL` field. If you don't know the URL of your backend, go to the [API Repository](##backend-repository) section and check the port on which the API is running.

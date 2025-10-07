@@ -1,3 +1,9 @@
+export { loginAction, logoutAction } from "./actions";
 export { handleApiError } from "./api";
 export { cn } from "./tailwind";
-export { isValidId } from "./utils";
+export {
+  extractUserFromJwt,
+  hasLegalAge,
+  isRutValid,
+  isValidId,
+} from "./utils";

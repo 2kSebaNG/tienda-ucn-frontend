@@ -1,3 +1,4 @@
+export { useAuth } from "./use-auth-service";
 export {
   useGetProductDetail,
   useGetProductsForCustomer,

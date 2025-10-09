@@ -1,12 +1,16 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { useAuth } from "@/hooks/api";
+import { useRegisterMutation } from "@/hooks/api";
 import { handleApiError } from "@/lib/api";
 import { RegisterRequest } from "@/models/requests";
 
 export const useRegister = () => {
-  const { registerAsync, isRegistering, registerError } = useAuth();
+  const {
+    mutateAsync: registerAsync,
+    isPending: isRegistering,
+    error: registerError,
+  } = useRegisterMutation();
 
   const router = useRouter();
 

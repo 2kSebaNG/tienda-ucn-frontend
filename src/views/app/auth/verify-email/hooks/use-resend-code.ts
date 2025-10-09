@@ -1,10 +1,14 @@
 import { toast } from "sonner";
 
-import { useAuth } from "@/hooks/api";
+import { useResendCodeMutation } from "@/hooks/api";
 import { handleApiError } from "@/lib";
 
 export const useResendCode = () => {
-  const { resendCodeAsync, isResending, resendError } = useAuth();
+  const {
+    mutateAsync: resendCodeAsync,
+    isPending: isResending,
+    error: resendError,
+  } = useResendCodeMutation();
 
   const handleResend = async (email: string) => {
     try {

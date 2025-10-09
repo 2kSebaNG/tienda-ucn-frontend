@@ -1,9 +1,13 @@
 import { toast } from "sonner";
 
-import { useAuth } from "@/hooks/api";
+import { useLoginMutation } from "@/hooks/api";
 
 export const useLogin = () => {
-  const { loginAsync, isLoggingIn, loginError } = useAuth();
+  const {
+    mutateAsync: loginAsync,
+    isPending: isLoginIn,
+    error: loginError,
+  } = useLoginMutation();
 
   const handleLogin = async (data: {
     email: string;
@@ -22,7 +26,7 @@ export const useLogin = () => {
 
   return {
     handleLogin,
-    isLoading: isLoggingIn,
+    isLoading: isLoginIn,
     error: loginError,
   };
 };

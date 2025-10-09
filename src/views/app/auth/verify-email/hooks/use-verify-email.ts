@@ -1,12 +1,16 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { useAuth } from "@/hooks/api";
+import { useVerifyEmailMutation } from "@/hooks/api";
 import { handleApiError } from "@/lib";
 import { VerifyEmailRequest } from "@/models/requests";
 
 export const useVerifyEmail = () => {
-  const { verifyEmailAsync, isVerifying, verifyError } = useAuth();
+  const {
+    mutateAsync: verifyEmailAsync,
+    isPending: isVerifying,
+    error: verifyError,
+  } = useVerifyEmailMutation();
 
   const router = useRouter();
 

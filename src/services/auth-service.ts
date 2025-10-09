@@ -1,6 +1,9 @@
 import { ApiResponse } from "@/models/generics";
-import { LoginRequest, RegisterRequest } from "@/models/requests";
-import { VerifyEmailRequest } from "@/models/requests";
+import {
+  LoginRequest,
+  RegisterRequest,
+  VerifyEmailRequest,
+} from "@/models/requests";
 
 import { BaseApiService } from "./base-api-service";
 

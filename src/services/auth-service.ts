@@ -1,8 +1,7 @@
 import { ApiResponse } from "@/models/generics";
 import { LoginRequest, RegisterRequest } from "@/models/requests";
-
-import { VerifyEmailRequest } from "../models/requests/auth";
-import { BaseApiService } from "./base-api-service";
+import { VerifyEmailRequest } from "@/models/requests";
+import { BaseApiService } from "@/services";
 
 export class AuthService extends BaseApiService {
   constructor() {

@@ -5,12 +5,8 @@ import { useSession } from "next-auth/react";
 
 import { loginAction } from "@/lib/actions";
 import { LoginRequest } from "@/models/requests";
+import { RegisterRequest, VerifyEmailRequest } from "@/models/requests";
 import { authService } from "@/services/auth-service";
-
-import {
-  RegisterRequest,
-  VerifyEmailRequest,
-} from "../../models/requests/auth";
 
 export const useAuth = () => {
   const { data: session, status, update } = useSession();

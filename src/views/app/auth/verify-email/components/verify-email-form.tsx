@@ -50,6 +50,7 @@ export function VerifyEmailForm({ email }: Props) {
       email: email || "",
       verificationCode: "",
     },
+    mode: "onTouched",
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -115,13 +116,9 @@ export function VerifyEmailForm({ email }: Props) {
 
         {verifyError && verifyError.includes("ya ha sido verificado") ? (
           <div className="text-sm text-red-600">
-            {verifyError}{" "}
+            {verifyError}
             <span className="font-semibold underline">
-              <Link
-                href={`/auth/login?email=${encodeURIComponent(form.getValues("email"))}`}
-              >
-                Inicia sesión para continuar
-              </Link>
+              <Link href={`/auth/login`}>Inicia sesión para continuar</Link>
             </span>
           </div>
         ) : (
@@ -131,8 +128,8 @@ export function VerifyEmailForm({ email }: Props) {
         <div className="flex justify-center items-center">
           <Button
             type="submit"
-            className="w-full"
-            disabled={isVerifying || isResending}
+            className={`w-full ${isVerifying ? "cursor-wait" : "cursor-pointer"}`}
+            disabled={isVerifying || isResending || !form.formState.isValid}
           >
             Ingresar
           </Button>
@@ -149,7 +146,7 @@ export function VerifyEmailForm({ email }: Props) {
             size="sm"
             onClick={onResend}
             disabled={isResending || isVerifying}
-            className="h-auto p-0"
+            className={`h-auto p-0 ${isResending ? "cursor-wait" : "cursor-pointer"}`}
           >
             {isResending ? "Reenviando..." : "Reenviar código"}
           </Button>

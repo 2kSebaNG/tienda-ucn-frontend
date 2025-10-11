@@ -17,6 +17,14 @@ export {
 } from "./carousel";
 export { Checkbox } from "./checkbox";
 export {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
+export {
   Form,
   FormControl,
   FormDescription,
@@ -49,5 +57,15 @@ export {
   SelectTrigger,
   SelectValue,
 } from "./select";
+export {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./sheet";
 export { Skeleton } from "./skeleton";
 export { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";

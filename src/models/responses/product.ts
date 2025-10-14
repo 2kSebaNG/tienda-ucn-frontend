@@ -29,3 +29,25 @@ export interface ProductDetailForCustomerResponse {
   statusName: string;
   isAvailable: boolean;
 }
+
+export interface ProductForAdminResponse {
+  id: number;
+  title: string;
+  mainImageURL: string;
+  price: string;
+  stock: number;
+  stockIndicator: string;
+  categoryName: string;
+  brandName: string;
+  statusName: string;
+  isAvailable: boolean;
+  updatedAt: string;
+}
+
+export interface ProductListForAdminResponse {
+  products: ProductForAdminResponse[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+}

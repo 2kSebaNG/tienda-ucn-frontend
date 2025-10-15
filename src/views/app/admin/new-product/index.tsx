@@ -1,4 +1,4 @@
-import { NewProductCard } from "./components/new-product-card";
+import { NewProductCard } from "./components";
 
 export default function NewProductView() {
   return (

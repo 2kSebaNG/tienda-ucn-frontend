@@ -42,8 +42,8 @@ export const useGetProductsForAdmin = (
 
 export const useCreateProductMutation = () => {
   return useMutation({
-    mutationFn: async (productData: CreateProductRequest) => {
-      const response = await productService.createProduct(productData);
+    mutationFn: async (productFormData: FormData) => {
+      const response = await productService.createProduct(productFormData);
       return response.data;
     },
   });

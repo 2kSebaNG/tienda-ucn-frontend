@@ -34,13 +34,14 @@ export default function ProductsView() {
           currentSearch={filters.searchTerm ?? ""}
         />
 
-        {error && (
-          <ProductsErrorState
-            error={handleApiError(error).details}
-            canRetry={handleApiError(error).canRetry}
-            onRetry={actions.handleRetry}
-          />
-        )}
+        {error &&
+          !handleApiError(error).message.includes("Producto no encontrado") && (
+            <ProductsErrorState
+              error={handleApiError(error).details}
+              canRetry={handleApiError(error).canRetry}
+              onRetry={actions.handleRetry}
+            />
+          )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-5 mb-5">
           {isLoading ? (
@@ -72,9 +73,11 @@ export default function ProductsView() {
           onPageClick={actions.handlePageClick}
         />
 
-        {products.length === 0 && !isLoading && !error && (
-          <ProductsEmptyState />
-        )}
+        {products.length === 0 &&
+          !isLoading &&
+          handleApiError(error).message.includes("Producto no encontrado") && (
+            <ProductsEmptyState />
+          )}
       </div>
     </Suspense>
   );

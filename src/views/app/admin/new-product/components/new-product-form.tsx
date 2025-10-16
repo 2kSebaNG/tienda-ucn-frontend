@@ -43,7 +43,7 @@ const formSchema = z.object({
     .number()
     .int({ error: "El stock debe ser un número entero" })
     .gte(0, { error: "El stock no puede ser menor a 0" }),
-  status: z.enum(["New", "Used"], { error: "El estado no es válido" }),
+  status: z.enum(["New", "Used"], { error: "Seleccione un estado válido" }),
   categoryName: z
     .string()
     .min(3, { error: "La categoría debe tener al menos 3 caracteres" })
@@ -94,8 +94,7 @@ export function NewProductForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-4 gap-6 items-start">
-          {/* Columna 1: Título y Descripción */}
+        <div className="grid grid-cols-3 gap-6">
           <div className="flex flex-col gap-6">
             <FormField
               control={form.control}
@@ -137,7 +136,6 @@ export function NewProductForm() {
             />
           </div>
 
-          {/* Columna 2: Precio y Stock */}
           <div className="flex flex-col gap-6">
             <FormField
               control={form.control}
@@ -188,12 +186,11 @@ export function NewProductForm() {
             />
           </div>
 
-          {/* Columna 3: Estado, Categoría y Marca */}
           <div className="flex flex-col gap-6">
             <FormField
               control={form.control}
               name="status"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <FormItem>
                   <FormLabel>Estado</FormLabel>
                   <FormControl>
@@ -202,7 +199,10 @@ export function NewProductForm() {
                       defaultValue={field.value}
                       disabled={isLoading}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger
+                        className={`w-full ${fieldState.error ? "border-destructive" : ""} `}
+                        onBlur={field.onBlur}
+                      >
                         <SelectValue placeholder="Selecciona un estado" />
                       </SelectTrigger>
                       <SelectContent>
@@ -244,37 +244,36 @@ export function NewProductForm() {
               )}
             />
           </div>
+        </div>
 
-          {/* Columna 4: Subida de imágenes */}
-          <div className="flex flex-col gap-6">
-            <FormField
-              control={form.control}
-              name="images"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Imágenes</FormLabel>
-                  <FormControl>
-                    <ImageInput
-                      {...field}
-                      value={field.value ?? []}
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+        <FormField
+          control={form.control}
+          name="images"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel>Imágenes</FormLabel>
+              <FormControl>
+                <ImageInput
+                  {...field}
+                  value={field.value ?? []}
+                  disabled={isLoading}
+                  className="focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  error={!!fieldState.error}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <div className="col-span-4 flex justify-center mt-4">
-            <Button
-              type="submit"
-              className={`w-full ${isLoading ? "cursor-wait" : "cursor-pointer"}`}
-              disabled={isLoading || !form.formState.isValid}
-            >
-              {isLoading ? "Creando producto..." : "Crear producto"}
-            </Button>
-          </div>
+        <div className="col-span-4 flex justify-center mt-4">
+          <Button
+            type="submit"
+            className={`w-full ${isLoading ? "cursor-wait" : "cursor-pointer"}`}
+            disabled={isLoading || !form.formState.isValid}
+          >
+            {isLoading ? "Creando producto..." : "Crear producto"}
+          </Button>
         </div>
       </form>
     </Form>

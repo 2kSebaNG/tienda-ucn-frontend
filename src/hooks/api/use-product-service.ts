@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { isValidId } from "@/lib";
 import { PaginationQueryParams } from "@/models/requests";
@@ -25,5 +25,35 @@ export const useGetProductDetail = (id: string, enabled = true) => {
     },
     enabled: enabled && isValidId(id),
     staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useGetProductsForAdmin = (
+  params: PaginationQueryParams = { pageNumber: 1 }
+) => {
+  return useQuery({
+    queryKey: ["products", "admin", params],
+    queryFn: async () => {
+      const response = await productService.getProductsForAdmin(params);
+      return response.data;
+    },
+  });
+};
+
+export const useCreateProductMutation = () => {
+  return useMutation({
+    mutationFn: async (productFormData: FormData) => {
+      const response = await productService.createProduct(productFormData);
+      return response.data;
+    },
+  });
+};
+
+export const useToggleProductAvailabilityMutation = () => {
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await productService.toggleProductAvailability(id);
+      return response.data;
+    },
   });
 };

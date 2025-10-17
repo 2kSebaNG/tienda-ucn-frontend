@@ -1,3 +1,4 @@
+export { Badge } from "./badge";
 export { Button } from "./button";
 export {
   Card,
@@ -16,6 +17,16 @@ export {
   CarouselPrevious,
 } from "./carousel";
 export { Checkbox } from "./checkbox";
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
 export {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,6 +68,7 @@ export {
   SelectTrigger,
   SelectValue,
 } from "./select";
+export { Separator } from "./separator";
 export {
   Sheet,
   SheetClose,
@@ -68,4 +80,6 @@ export {
   SheetTrigger,
 } from "./sheet";
 export { Skeleton } from "./skeleton";
+export { Switch } from "./switch";
+export { Textarea } from "./textarea";
 export { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";

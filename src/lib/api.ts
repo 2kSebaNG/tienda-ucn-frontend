@@ -56,8 +56,8 @@ export const handleApiError = (error: unknown): ApiErrorResult => {
 
     // HTTP errors without custom format
     return {
-      message: getDefaultErrorMessage(error.response.status),
-      details: `Código de estado: ${error.response.status}`,
+      message: `Error ${error.response.status}`,
+      details: getDefaultErrorMessage(error.response.status),
       canRetry: error.response.status >= 500,
     };
   }

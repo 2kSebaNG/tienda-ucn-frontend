@@ -41,6 +41,12 @@ export class AuthService extends BaseApiService {
       }
     );
   }
+
+  refreshToken() {
+    return this.httpClient.post<ApiResponse<string>>(
+      `${this.baseURL}/refresh-token`
+    );
+  }
 }
 
 export const authService = new AuthService();

@@ -3,21 +3,29 @@
 import { Suspense } from "react";
 
 import { handleApiError } from "@/lib";
-import { ProductForCustomerResponse } from "@/models/responses";
+import { ProductForAdminResponse } from "@/models/responses";
 
 import {
-  FilterBar,
-  ProductCard,
-  ProductCardSkeleton,
-  ProductsEmptyState,
-  ProductsErrorState,
-  ProductsPagination,
+  AdminFilterBar,
+  AdminProductCard,
+  AdminProductCardSkeleton,
+  AdminProductsEmptyState,
+  AdminProductsErrorState,
+  AdminProductsPagination,
 } from "./components";
-import { useProducts } from "./hooks";
+import { useAdminProducts } from "./hooks";
 
-export default function ProductsView() {
-  const { products, pagination, isLoading, error, filters, actions } =
-    useProducts();
+export default function AdminProductsView() {
+  const {
+    products,
+    toggledProductId,
+    pagination,
+    isLoading,
+    error,
+    isToggling,
+    filters,
+    actions,
+  } = useAdminProducts();
 
   return (
     <Suspense fallback={<div>Cargando...</div>}>
@@ -26,7 +34,7 @@ export default function ProductsView() {
           Productos disponibles
         </h1>
 
-        <FilterBar
+        <AdminFilterBar
           maxPageSize={pagination.totalCount}
           onSearch={actions.handleSearch}
           onPageSizeChange={actions.handleChangePageSize}
@@ -36,7 +44,7 @@ export default function ProductsView() {
 
         {error &&
           !handleApiError(error).message.includes("Producto no encontrado") && (
-            <ProductsErrorState
+            <AdminProductsErrorState
               error={handleApiError(error).details}
               canRetry={handleApiError(error).canRetry}
               onRetry={actions.handleRetry}
@@ -47,24 +55,24 @@ export default function ProductsView() {
           {isLoading ? (
             <>
               {Array.from({ length: 10 }).map((_, index) => (
-                <ProductCardSkeleton key={`skeleton-${index}`} />
+                <AdminProductCardSkeleton key={`skeleton-${index}`} />
               ))}
             </>
           ) : (
-            products.map((product: ProductForCustomerResponse) => (
-              <ProductCard
+            products.map((product: ProductForAdminResponse) => (
+              <AdminProductCard
                 key={product.id}
                 product={product}
-                isPriority={product.mainImageURL.includes("default")}
-                onClick={() =>
-                  actions.handleRedirectToProductDetail(product.id)
+                onToggleAvailability={actions.handleToggleProductAvailability}
+                isToggling={
+                  isToggling && toggledProductId === product.id.toString()
                 }
               />
             ))
           )}
         </div>
 
-        <ProductsPagination
+        <AdminProductsPagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
           pageNumbers={pagination.pageNumbers}
@@ -76,7 +84,7 @@ export default function ProductsView() {
         {products.length === 0 &&
           !isLoading &&
           handleApiError(error).message.includes("Producto no encontrado") && (
-            <ProductsEmptyState />
+            <AdminProductsEmptyState />
           )}
       </div>
     </Suspense>

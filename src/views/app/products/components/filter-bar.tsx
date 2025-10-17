@@ -1,6 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { Input, Label } from "@/components/ui";
+import {
+  Input,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui";
 import { useDebounce } from "@/hooks/common";
 
 interface FilterBarProps {
@@ -19,11 +27,12 @@ export const FilterBar = ({
   currentSearch,
 }: FilterBarProps) => {
   const [searchInput, setSearchInput] = useState(currentSearch);
-  const [pageSizeInput, setPageSizeInput] = useState(
-    currentPageSize.toString()
-  );
-
   const debouncedSearch = useDebounce(searchInput, 500);
+
+  const pageSizeOptions = useMemo(() => {
+    const baseOptions = [5, 10, 20, 50, 100];
+    return baseOptions.filter(option => option <= maxPageSize);
+  }, [maxPageSize]);
 
   useEffect(() => {
     if (debouncedSearch !== currentSearch) {
@@ -35,28 +44,10 @@ export const FilterBar = ({
     setSearchInput(currentSearch);
   }, [currentSearch]);
 
-  useEffect(() => {
-    setPageSizeInput(currentPageSize.toString());
-  }, [currentPageSize]);
-
   const handlePageSizeChange = (value: string) => {
-    setPageSizeInput(value);
     const numValue = parseInt(value);
-
-    if (!isNaN(numValue) && numValue >= 1 && numValue <= maxPageSize) {
+    if (!isNaN(numValue)) {
       onPageSizeChange(numValue);
-    }
-  };
-
-  const handlePageSizeBlur = () => {
-    const numValue = parseInt(pageSizeInput);
-
-    if (isNaN(numValue) || numValue < 1) {
-      setPageSizeInput("1");
-      onPageSizeChange(1);
-    } else if (numValue > maxPageSize) {
-      setPageSizeInput(maxPageSize.toString());
-      onPageSizeChange(maxPageSize);
     }
   };
 
@@ -74,18 +65,22 @@ export const FilterBar = ({
       </Label>
       <Label htmlFor="productsPerPage">
         Productos por página:{" "}
-        <Input
-          id="productsPerPage"
-          className="justify-start w-fit"
-          placeholder="1"
-          type="number"
-          min={1}
-          max={maxPageSize}
-          value={pageSizeInput}
-          onChange={e => handlePageSizeChange(e.target.value)}
-          onBlur={handlePageSizeBlur}
-          disabled={maxPageSize === 0}
-        />
+        <Select
+          value={currentPageSize.toString()}
+          onValueChange={handlePageSizeChange}
+          disabled={maxPageSize === 0 || pageSizeOptions.length === 0}
+        >
+          <SelectTrigger className="w-24" id="productsPerPage">
+            <SelectValue placeholder="Seleccionar" />
+          </SelectTrigger>
+          <SelectContent>
+            {pageSizeOptions.map(option => (
+              <SelectItem key={option} value={option.toString()}>
+                {option}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </Label>
     </div>
   );

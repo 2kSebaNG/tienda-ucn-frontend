@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import { MouseEvent, useState } from "react";
 import { toast } from "sonner";
 
@@ -16,8 +15,6 @@ export const useAdminProducts = () => {
   });
 
   const [toggledProductId, setToggledProductId] = useState<string | null>(null);
-
-  const router = useRouter();
 
   // API calls
   const {
@@ -85,10 +82,6 @@ export const useAdminProducts = () => {
     handleUpdateFilters({ pageSize, pageNumber: 1 });
   };
 
-  const handleRedirectToCreateProduct = () => {
-    router.push(`/admin/product/new`);
-  };
-
   const handleToggleProductAvailability = async (productId: string) => {
     try {
       setToggledProductId(productId);
@@ -150,7 +143,6 @@ export const useAdminProducts = () => {
     actions: {
       handleSearch,
       handleChangePageSize,
-      handleRedirectToCreateProduct,
       handleToggleProductAvailability,
       handlePreviousPage,
       handleNextPage,

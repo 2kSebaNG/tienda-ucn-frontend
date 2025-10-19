@@ -63,7 +63,6 @@ export const authConfig = {
         token.accessToken = user.accessToken;
         token.role = user.role;
         token.exp = user.exp;
-        token.refreshAttempted = false;
       }
 
       if (trigger === "update" && session) {

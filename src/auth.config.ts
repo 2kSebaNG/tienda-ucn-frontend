@@ -66,61 +66,10 @@ export const authConfig = {
         token.refreshAttempted = false;
       }
 
-      // Handle session updates
       if (trigger === "update" && session) {
-        // Update user data in the token
         if (session.user?.email) {
           token.email = session.user.email;
         }
-
-        return token;
-      }
-
-      // Check if token is expired or about to expire (5 minutes before)
-      const now = Date.now() / 1000;
-      const fiveMinutesFromNow = now + 5 * 60;
-
-      if (
-        token.exp &&
-        typeof token.exp === "number" &&
-        token.exp <= fiveMinutesFromNow &&
-        !token.refreshAttempted
-      ) {
-        try {
-          // Marcar que ya intentamos refresh para evitar loops
-          token.refreshAttempted = true;
-
-          const refreshResponse = await authService.refreshToken();
-
-          if (refreshResponse.data.data) {
-            // Actualizar token con el nuevo
-            token.accessToken = refreshResponse.data.data;
-
-            // Decodificar el nuevo token para obtener nueva expiración
-            try {
-              const user = extractUserFromJwt(refreshResponse.data.data);
-              token.exp = user.exp;
-              token.refreshAttempted = false; // Reset para futuros refresh
-            } catch {
-              // Token inválido, se manejará en la validación de expiración
-            }
-          } else {
-            // Si el refresh falla, limpiar token
-            return null;
-          }
-        } catch {
-          // Si hay error en refresh, limpiar token para forzar re-autenticación
-          return null;
-        }
-      }
-
-      // Si el token ya expiró completamente, limpiar
-      if (
-        token.exp &&
-        typeof token.exp === "number" &&
-        Date.now() >= token.exp * 1000
-      ) {
-        return null; // Return null to force re-authentication
       }
 
       return token;

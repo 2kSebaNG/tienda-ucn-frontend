@@ -108,7 +108,7 @@ export function LoginForm() {
               <TooltipContent side="right">
                 <p>
                   Si selecciona esta opción, su sesión se mantendrá activa
-                  durante 30 días.
+                  durante 1 día.
                 </p>
               </TooltipContent>
             </Tooltip>

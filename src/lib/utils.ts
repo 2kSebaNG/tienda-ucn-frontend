@@ -72,3 +72,11 @@ export function extractUserFromJwt(token: string) {
     throw error;
   }
 }
+
+export function getPublicRouteFromAdmin(adminPath: string): string {
+  if (adminPath === "/admin/products" || adminPath === "/admin/new-product") {
+    return "/products";
+  }
+
+  return "/";
+}

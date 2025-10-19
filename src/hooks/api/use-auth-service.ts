@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 import { loginAction } from "@/lib/actions";
 import { LoginRequest } from "@/models/requests";
@@ -60,15 +61,16 @@ export const useResendCodeMutation = () => {
 };
 
 export const useLogoutMutation = () => {
-  const { update } = useSession();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: async () => {
       await signOut({ redirect: false });
       queryClient.clear();
     },
-    onSuccess: async () => {
-      await update();
+    onSuccess: () => {
+      toast.success("Sesión cerrada correctamente");
+      router.refresh();
     },
   });
 };

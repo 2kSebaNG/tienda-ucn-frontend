@@ -1,13 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 export default function HomeView() {
-  const { data } = useSession();
-  const role = data?.user.role;
-
   return (
     <section className="flex items-center justify-center min-h-screen bg-gray-100 w-full">
       <div className="relative min-h-screen w-full">
@@ -33,9 +27,7 @@ export default function HomeView() {
           </p>
 
           <Link
-            href={
-              role?.toLowerCase() === "admin" ? "/admin/products" : "/products"
-            }
+            href="/products"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
           >
             Explorar Productos

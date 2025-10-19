@@ -41,7 +41,9 @@ const formSchema = z
         message: "El RUT no está en formato correcto",
       })
       .refine(isRutValid, { message: "El RUT no es válido" }),
-    gender: z.enum(["Masculino", "Femenino", "Otro"]),
+    gender: z.enum(["Masculino", "Femenino", "Otro"], {
+      error: "Selecciona un género",
+    }),
     birthDate: z
       .string()
       .min(1, { message: "La fecha de nacimiento es requerida" })
@@ -173,7 +175,7 @@ export function RegisterForm() {
           <FormField
             control={form.control}
             name="gender"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>Género</FormLabel>
                 <FormControl>
@@ -182,7 +184,10 @@ export function RegisterForm() {
                     defaultValue={field.value}
                     disabled={isLoading}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger
+                      className={`w-full ${fieldState.error ? "border-destructive" : ""} `}
+                      onBlur={field.onBlur}
+                    >
                       <SelectValue placeholder="Selecciona tu género" />
                     </SelectTrigger>
                     <SelectContent>

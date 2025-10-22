@@ -35,11 +35,11 @@ export function extractUserFromJwt(token: string) {
 }
 
 export function isTokenExpired(
-  token: { exp?: number } | null | undefined
+  token: { customExp?: number } | null | undefined
 ): boolean {
-  if (!token || !token.exp) return true;
+  if (!token || !token.customExp) return true;
   const now = Math.floor(Date.now() / 1000);
-  return token.exp < now;
+  return token.customExp < now;
 }
 
 export function isSessionExpired(

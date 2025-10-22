@@ -43,24 +43,14 @@ export function isTokenExpired(
 }
 
 export function isSessionExpired(
-  session: { expires?: string } | null | undefined
+  session: { tokenExp?: number } | null | undefined
 ): boolean {
-  if (!session?.expires) return true;
+  if (!session?.tokenExp) return true;
 
-  const expiresDate = new Date(session.expires).getTime();
-  const now = Date.now();
+  const nowUTC = Math.floor(Date.now() / 1000);
+  const expired = nowUTC >= session.tokenExp;
 
-  return now >= expiresDate;
-}
-
-export function jwtExpirationDate(
-  token: { exp?: number } | null | undefined
-): Date {
-  if (!token || !token.exp) {
-    return new Date(0);
-  }
-
-  return new Date(token.exp * 1000);
+  return expired;
 }
 
 export function getPublicRouteFromAdmin(adminPath: string): string {

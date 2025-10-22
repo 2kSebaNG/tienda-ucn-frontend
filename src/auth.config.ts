@@ -28,7 +28,7 @@ export const authConfig = {
             exp: user.exp,
           };
         } catch (error) {
-          return null;
+          return error as null;
         }
       },
     }),

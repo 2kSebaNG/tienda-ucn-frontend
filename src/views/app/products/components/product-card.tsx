@@ -1,8 +1,10 @@
+import { Check, Loader2, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { MouseEvent } from "react";
 
 import { Button } from "@/components/ui";
 import { ProductForCustomerResponse } from "@/models/responses";
+
+import { useProductsCart } from "../hooks";
 
 interface ProductCardProps {
   product: ProductForCustomerResponse;
@@ -15,10 +17,10 @@ export const ProductCard = ({
   onClick,
   isPriority,
 }: ProductCardProps) => {
-  const handleAddToCart = (e: MouseEvent) => {
-    e.stopPropagation();
-    alert(`Producto ${product.title} agregado al carrito.`);
-  };
+  const { isAdding, justAdded, handleAddToCart } = useProductsCart({
+    productId: product.id,
+    productTitle: product.title,
+  });
 
   return (
     <div
@@ -40,9 +42,28 @@ export const ProductCard = ({
         <p className="mt-2 text-blue-700 font-bold text-xl">{product.price}</p>
         <Button
           className="mt-4 w-full cursor-pointer"
-          onClick={e => handleAddToCart(e)}
+          onClick={e => {
+            e.stopPropagation();
+            handleAddToCart();
+          }}
+          disabled={isAdding || justAdded}
         >
-          Agregar al Carrito
+          {isAdding ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Agregando...
+            </>
+          ) : justAdded ? (
+            <>
+              <Check className="mr-2 h-4 w-4" />
+              ¡Agregado!
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Agregar al Carrito
+            </>
+          )}
         </Button>
       </div>
     </div>

@@ -17,13 +17,16 @@ declare module "next-auth" {
       role: string;
     };
     accessToken: string;
+    tokenExp: number;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
+    userId: string;
     role: string;
-    exp: number;
+    customExp: number;
+    email: string;
   }
 }

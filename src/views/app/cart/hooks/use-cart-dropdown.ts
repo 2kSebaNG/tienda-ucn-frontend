@@ -37,7 +37,10 @@ export function useCartDropdown() {
 
   useEffect(() => {
     if (isOpen)
-      fetchCart().catch(err => console.error("Error fetching cart:", err));
+      fetchCart().catch(err => {
+        const apiError = handleApiError(err).details;
+        toast.error(apiError || "Error cargando el carrito");
+      });
   }, [isOpen, fetchCart]);
 
   const handleQuantityChange = async (item: CartItemRequest, delta: number) => {

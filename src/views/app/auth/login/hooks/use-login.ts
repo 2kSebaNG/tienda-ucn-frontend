@@ -3,12 +3,14 @@ import { toast } from "sonner";
 import { useLoginMutation } from "@/hooks/api";
 
 export const useLogin = () => {
+  // API Call
   const {
     mutateAsync: loginAsync,
     isPending: isLoginIn,
     error: loginError,
   } = useLoginMutation();
 
+  // Actions
   const handleLogin = async (data: {
     email: string;
     password: string;
@@ -28,8 +30,11 @@ export const useLogin = () => {
   };
 
   return {
-    handleLogin,
+    // Loading and error states
     isLoading: isLoginIn,
     error: loginError,
+
+    // Actions
+    actions: { handleLogin },
   };
 };

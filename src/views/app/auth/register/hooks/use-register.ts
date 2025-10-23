@@ -2,15 +2,18 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { useRegisterMutation } from "@/hooks/api";
-import { handleApiError } from "@/lib/api";
+import { handleApiError } from "@/lib";
 import { RegisterRequest } from "@/models/requests";
 
 export const useRegister = () => {
+  // API Call
   const { mutateAsync: registerAsync, isPending: isRegistering } =
     useRegisterMutation();
 
+  // Router
   const router = useRouter();
 
+  // Actions
   const handleRegister = async (registerData: RegisterRequest) => {
     try {
       await registerAsync(registerData);
@@ -36,7 +39,10 @@ export const useRegister = () => {
   };
 
   return {
-    handleRegister,
+    // Loading state
     isLoading: isRegistering,
+
+    // Actions
+    actions: { handleRegister },
   };
 };

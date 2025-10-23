@@ -12,8 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui";
 import { thousandSeparatorPipe } from "@/lib";
-
-import { useCartDropdown } from "../hooks";
+import { useCartDropdown } from "@/views/app/cart/hooks";
 
 export const CartDropdown = () => {
   const {

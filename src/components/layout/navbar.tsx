@@ -20,7 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui";
 import { useLogoutMutation } from "@/hooks/api";
-import { CartDropdown } from "@/views/app/cart/components";
+
+import { CartDropdown } from "./cart-dropdown";
 
 export const Navbar = () => {
   // Hooks

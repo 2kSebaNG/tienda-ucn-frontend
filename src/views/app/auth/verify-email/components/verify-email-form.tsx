@@ -33,11 +33,14 @@ interface Props {
 
 export function VerifyEmailForm({ email }: Props) {
   const {
-    handleVerify,
     isLoading: isVerifying,
     error: verifyError,
+    actions: { handleVerify },
   } = useVerifyEmail();
-  const { handleResend, isLoading: isResending } = useResendCode();
+  const {
+    isLoading: isResending,
+    actions: { handleResend },
+  } = useResendCode();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

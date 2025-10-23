@@ -70,7 +70,10 @@ const formSchema = z.object({
 });
 
 export function NewProductForm() {
-  const { handleCreateProduct, isLoading } = useNewProduct();
+  const {
+    isLoading,
+    actions: { handleCreateProduct },
+  } = useNewProduct();
 
   const form = useForm({
     resolver: zodResolver(formSchema),

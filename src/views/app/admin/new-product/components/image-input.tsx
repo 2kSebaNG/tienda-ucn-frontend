@@ -28,12 +28,15 @@ export function ImageInput({
   error = false,
 }: ImageInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { previews, handleFiles, removeImage, totalSize, formatFileSize } =
-    useImageInput({
-      value,
-      onChange,
-      onBlur,
-    });
+  const {
+    previews,
+    totalSize,
+    actions: { handleFiles, removeImage, formatFileSize },
+  } = useImageInput({
+    value,
+    onChange,
+    onBlur,
+  });
 
   return (
     <div className={`flex flex-col gap-4 ${className}`}>

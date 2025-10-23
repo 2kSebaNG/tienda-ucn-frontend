@@ -5,7 +5,7 @@ import {
   useAddItemToCartMutation,
   useUpdateQuantityMutation,
 } from "@/hooks/api";
-import { handleApiError } from "@/lib/api";
+import { handleApiError } from "@/lib";
 import { useCartStore } from "@/stores";
 
 interface UseProductsCartProps {
@@ -17,20 +17,26 @@ export const useProductsCart = ({
   productId,
   productTitle,
 }: UseProductsCartProps) => {
+  // State
   const [isAdding, setIsAdding] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
 
+  // Store
   const { items, setItems } = useCartStore();
 
+  // API mutations
   const addItemMutation = useAddItemToCartMutation();
   const updateQuantityMutation = useUpdateQuantityMutation();
 
+  // Computed values
+  const existingItem = items.find(i => i.productId === productId);
+  const isInCart = !!existingItem;
+
+  // Actions
   const handleAddToCart = async () => {
     setIsAdding(true);
 
     try {
-      const existingItem = items.find(i => i.productId === productId);
-
       if (!existingItem) {
         const newCart = await addItemMutation.mutateAsync({
           productId: productId.toString(),
@@ -58,8 +64,21 @@ export const useProductsCart = ({
   };
 
   return {
+    // Cart state
+    isInCart,
+    currentQuantity: existingItem?.quantity ?? 0,
+
+    // Loading states
     isAdding,
     justAdded,
-    handleAddToCart,
+
+    // Mutation states
+    isLoading: addItemMutation.isPending || updateQuantityMutation.isPending,
+    error: addItemMutation.error || updateQuantityMutation.error,
+
+    // Actions
+    actions: {
+      handleAddToCart,
+    },
   };
 };

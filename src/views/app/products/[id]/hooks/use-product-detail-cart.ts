@@ -19,16 +19,30 @@ export const useProductDetailCart = ({
   productTitle,
   maxStock = 99,
 }: UseProductDetailCartProps) => {
-  const { items, setItems } = useCartStore();
-
-  const cartItem = items.find(item => item.productId === productId);
-
+  // State
   const [localQuantity, setLocalQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
 
+  // Store
+  const { items, setItems } = useCartStore();
+
+  // API mutations
   const addItemMutation = useAddItemToCartMutation();
   const updateQuantityMutation = useUpdateQuantityMutation();
 
+  // Computed values
+  const cartItem = items.find(item => item.productId === productId);
+  const isInCart = !!cartItem;
+  const cartQuantity = cartItem?.quantity || 0;
+  const hasChanges = cartItem
+    ? cartItem.quantity !== localQuantity
+    : localQuantity > 0;
+  const canIncrement = localQuantity < maxStock;
+  const canDecrement = localQuantity > 1;
+  const canResetQuantity = isInCart && localQuantity !== 1;
+  const canSetMax = isInCart && localQuantity !== maxStock;
+
+  // Effects
   useEffect(() => {
     if (cartItem) {
       setLocalQuantity(cartItem.quantity);
@@ -37,17 +51,34 @@ export const useProductDetailCart = ({
     }
   }, [cartItem]);
 
-  const handleIncrement = () =>
-    setLocalQuantity(prev => Math.min(prev + 1, maxStock));
-  const handleDecrement = () => setLocalQuantity(prev => Math.max(prev - 1, 1));
+  // Helpers
+  const getButtonText = () => {
+    if (isAdding) return "Procesando...";
+    if (cartItem)
+      return hasChanges ? "Actualizar cantidad" : "Ya está en el carrito";
+    return "Añadir al carrito";
+  };
+
+  // Actions
+  const handleIncrement = () => {
+    if (canIncrement) {
+      setLocalQuantity(prev => Math.min(prev + 1, maxStock));
+    }
+  };
+
+  const handleDecrement = () => {
+    if (canDecrement) {
+      setLocalQuantity(prev => Math.max(prev - 1, 1));
+    }
+  };
 
   const handleResetQuantity = async () => {
-    if (!cartItem || localQuantity === 1) return;
+    if (!canResetQuantity) return;
 
     setIsAdding(true);
     try {
       const updatedCart = await updateQuantityMutation.mutateAsync({
-        productId: cartItem.productId.toString(),
+        productId: cartItem!.productId.toString(),
         quantity: 1,
       });
       setItems(updatedCart.data.items);
@@ -62,12 +93,12 @@ export const useProductDetailCart = ({
   };
 
   const handleSetMax = async () => {
-    if (!cartItem || localQuantity === maxStock) return;
+    if (!canSetMax) return;
 
     setIsAdding(true);
     try {
       const updatedCart = await updateQuantityMutation.mutateAsync({
-        productId: cartItem.productId.toString(),
+        productId: cartItem!.productId.toString(),
         quantity: maxStock,
       });
       setItems(updatedCart.data.items);
@@ -107,28 +138,45 @@ export const useProductDetailCart = ({
     }
   };
 
-  const hasChanges = cartItem
-    ? cartItem.quantity !== localQuantity
-    : localQuantity > 0;
-
-  const getButtonText = () => {
-    if (isAdding) return "Procesando...";
-    if (cartItem)
-      return hasChanges ? "Actualizar cantidad" : "Ya está en el carrito";
-    return "Añadir al carrito";
-  };
-
   return {
-    localQuantity,
-    isInCart: !!cartItem,
-    cartQuantity: cartItem?.quantity || 0,
-    hasChanges,
+    // Quantity state
+    quantity: {
+      local: localQuantity,
+      cart: cartQuantity,
+      max: maxStock,
+    },
+
+    // Cart state
+    cart: {
+      isInCart,
+      hasChanges,
+    },
+
+    // Validation state
+    validation: {
+      canIncrement,
+      canDecrement,
+      canResetQuantity,
+      canSetMax,
+    },
+
+    // Loading states
     isAdding,
+    isLoading: addItemMutation.isPending || updateQuantityMutation.isPending,
+
+    // Mutation states
+    error: addItemMutation.error || updateQuantityMutation.error,
+
+    // UI helpers
     buttonText: getButtonText(),
-    handleIncrement,
-    handleDecrement,
-    handleAddToCart,
-    handleResetQuantity,
-    handleSetMax,
+
+    // Actions
+    actions: {
+      handleIncrement,
+      handleDecrement,
+      handleAddToCart,
+      handleResetQuantity,
+      handleSetMax,
+    },
   };
 };

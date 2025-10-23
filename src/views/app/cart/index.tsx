@@ -5,29 +5,29 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button, Card } from "@/components/ui";
-import { thousandSeparatorPipe } from "@/lib/utils";
+import { thousandSeparatorPipe } from "@/lib";
 
-import { useCartView } from "../cart/hooks";
 import { ClearCartDialog, RemoveItemDialog } from "./components";
+import { useCartView } from "./hooks";
 
 export default function CartView() {
   const {
     items,
+    cart: { totalItems, totalPrice, hasItems },
+    dialogs: { itemToRemove, clearingCart },
     isLoading,
-    totalItems,
-    totalPrice,
-    itemToRemove,
-    clearingCart,
-    handleQuantityChange,
-    handleRemoveWithConfirmation,
-    confirmRemove,
-    cancelRemove,
-    handleClearWithConfirmation,
-    confirmClean,
-    cancelClean,
+    actions: {
+      handleQuantityChange,
+      handleRemoveWithConfirmation,
+      handleConfirmRemove,
+      handleCancelRemove,
+      handleClearWithConfirmation,
+      handleConfirmClear,
+      handleCancelClear,
+    },
   } = useCartView();
 
-  if (isLoading && items.length === 0) {
+  if (isLoading && !hasItems) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
@@ -53,7 +53,7 @@ export default function CartView() {
           </p>
         </div>
 
-        {items.length > 0 && (
+        {hasItems && (
           <Button
             className="cursor-pointer hover:bg-destructive/80"
             variant="destructive"
@@ -66,7 +66,7 @@ export default function CartView() {
       </div>
 
       {/* Content */}
-      {items.length === 0 ? (
+      {!hasItems ? (
         <div className="text-center py-16">
           <ShoppingBag className="w-24 h-24 mx-auto text-muted-foreground/40 mb-4" />
           <h2 className="text-2xl font-semibold mb-2">Tu carrito está vacío</h2>
@@ -221,7 +221,7 @@ export default function CartView() {
                 <Button
                   className="w-full mb-3 cursor-pointer"
                   size="lg"
-                  disabled={isLoading || items.length === 0}
+                  disabled={isLoading || !hasItems}
                 >
                   Proceder al Checkout
                 </Button>
@@ -238,15 +238,15 @@ export default function CartView() {
       {/* Clear Cart Dialog */}
       <ClearCartDialog
         clearingCart={clearingCart}
-        confirmClean={confirmClean}
-        cancelClean={cancelClean}
+        confirmClean={handleConfirmClear}
+        cancelClean={handleCancelClear}
       />
 
       {/* Remove Item Dialog */}
       <RemoveItemDialog
         itemToRemove={itemToRemove}
-        cancelRemove={cancelRemove}
-        confirmRemove={confirmRemove}
+        cancelRemove={handleCancelRemove}
+        confirmRemove={handleConfirmRemove}
       />
     </div>
   );

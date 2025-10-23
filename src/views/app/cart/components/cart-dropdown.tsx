@@ -17,16 +17,18 @@ import { useCartDropdown } from "../hooks";
 
 export const CartDropdown = () => {
   const {
-    isOpen,
-    setIsOpen,
+    dropdown: { isOpen },
+    cart: { totalItems, totalPrice, hasItems },
     items,
     isLoading,
-    totalItems,
-    totalPrice,
-    handleQuantityChange,
-    handleRemoveItem,
-    handleClearCart,
-    handleViewCart,
+    actions: {
+      handleQuantityChange,
+      handleRemoveItem,
+      handleClearCart,
+      handleViewCart,
+      handleOpenDropdown,
+      handleCloseDropdown,
+    },
   } = useCartDropdown();
 
   const [isMounted, setIsMounted] = useState(false);
@@ -36,7 +38,12 @@ export const CartDropdown = () => {
   }, []);
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+    <DropdownMenu
+      open={isOpen}
+      onOpenChange={open =>
+        open ? handleOpenDropdown() : handleCloseDropdown()
+      }
+    >
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative cursor-pointer">
           <ShoppingCart className="h-5 w-5" />
@@ -56,7 +63,7 @@ export const CartDropdown = () => {
             Carrito {totalItems > 0 && `(${totalItems})`}
           </h3>
 
-          {items.length > 0 && (
+          {hasItems && (
             <Button
               variant="ghost"
               size="sm"
@@ -72,12 +79,12 @@ export const CartDropdown = () => {
 
         {/* Content */}
         <div className="max-h-96 overflow-y-auto">
-          {isLoading && items.length === 0 ? (
+          {isLoading && !hasItems ? (
             <div className="p-8 text-center text-muted-foreground">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2" />
               <p>Cargando...</p>
             </div>
-          ) : items.length === 0 ? (
+          ) : !hasItems ? (
             <div className="p-8 text-center">
               <ShoppingCart className="w-16 h-16 mx-auto text-muted-foreground/40 mb-3" />
               <p className="text-muted-foreground mb-2">
@@ -88,7 +95,7 @@ export const CartDropdown = () => {
                   variant="link"
                   size="sm"
                   className="cursor-pointer"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleCloseDropdown}
                 >
                   Explorar productos
                 </Button>
@@ -186,7 +193,7 @@ export const CartDropdown = () => {
         </div>
 
         {/* Footer */}
-        {items.length > 0 && (
+        {hasItems && (
           <div className="p-4 border-t bg-muted/30">
             <div className="flex justify-between items-center mb-3">
               <span className="font-semibold">Total:</span>

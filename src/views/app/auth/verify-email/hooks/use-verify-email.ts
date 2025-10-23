@@ -6,14 +6,20 @@ import { handleApiError } from "@/lib";
 import { VerifyEmailRequest } from "@/models/requests";
 
 export const useVerifyEmail = () => {
+  // Router
+  const router = useRouter();
+
+  // API calls
   const {
     mutateAsync: verifyEmailAsync,
     isPending: isVerifying,
     error: verifyError,
   } = useVerifyEmailMutation();
 
-  const router = useRouter();
+  // Computed values
+  const error = handleApiError(verifyError).details;
 
+  // Actions
   const handleVerify = async (verifyData: VerifyEmailRequest) => {
     try {
       await verifyEmailAsync(verifyData);
@@ -26,8 +32,13 @@ export const useVerifyEmail = () => {
   };
 
   return {
-    handleVerify,
+    // Loading and error states
     isLoading: isVerifying,
-    error: handleApiError(verifyError).details,
+    error,
+
+    // Actions
+    actions: {
+      handleVerify,
+    },
   };
 };

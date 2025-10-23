@@ -4,9 +4,11 @@ import { useResendCodeMutation } from "@/hooks/api";
 import { handleApiError } from "@/lib";
 
 export const useResendCode = () => {
+  // API Call
   const { mutateAsync: resendCodeAsync, isPending: isResending } =
     useResendCodeMutation();
 
+  // Actions
   const handleResend = async (email: string) => {
     try {
       await resendCodeAsync(email);
@@ -27,7 +29,9 @@ export const useResendCode = () => {
   };
 
   return {
-    handleResend,
     isLoading: isResending,
+    actions: {
+      handleResend,
+    },
   };
 };

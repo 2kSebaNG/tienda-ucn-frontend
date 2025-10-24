@@ -39,7 +39,7 @@ Once everything is installed, run the project by following the steps in the next
 4. Copy the `.env.example` content on the `.env.local` file.
 
    ```bash
-   cp .env.local .env
+   cp .env.example .env.local
    ```
 
 5. In the `.env.local` file, replace `your-api-url-here` on the `NEXT_PUBLIC_API_URL` field with the base URL of your API. Be sure to enclose the URL in double quotes (“ ”) to avoid errors when reading the `.env.local` file. If you don't know the URL of your backend, go to the [API Repository](#backend-repository) section and check the port on which the API is running.
@@ -56,7 +56,11 @@ Once everything is installed, run the project by following the steps in the next
 
 This command will notice that you already have a variable for `AUTH_SECRET` (in this case, that variable is `NEXTAUTH_SECRET`) in your `.env.local file`, so you should enter `y` when it asks **`Overwrite existing AUTH_SECRET? (y/N)`**.
 
-If it is not written directly to your `.env.local`, check if the secret was written on the console and then copy and paste it into the `NEXTAUTH_SECRET` variable in this file.
+If it is not written directly to your `.env.local`, check if the secret was written on the console and then copy it and replace `your-auth-secret-here` in the `NEXTAUTH_SECRET` field. As in the previous step, enclose the secret in double quotes (“ ”) to avoid problems when loading that value.
+
+```bash
+NEXTAUTH_SECRET=your-auth-secret-here
+```
 
 7. Restore the dependencies on a Visual Studio Code terminal.
 

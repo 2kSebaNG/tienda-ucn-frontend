@@ -313,7 +313,6 @@ export const useOrderPDF = () => {
       toast.success("PDF descargado exitosamente");
     } catch (error) {
       toast.dismiss();
-      console.error("Error generando PDF:", error);
       toast.error("Error al generar el PDF");
     }
   };

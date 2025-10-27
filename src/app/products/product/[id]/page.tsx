@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 
 import { isValidId } from "@/lib";
 import { productService } from "@/services/product-service";
-import { SingleProductView } from "@/views/app/products/[id]";
+import { SingleProductView } from "@/views/app/products/product/[id]";
 
 interface SingleProductPageProps {
   params: Promise<{ id: string }>;

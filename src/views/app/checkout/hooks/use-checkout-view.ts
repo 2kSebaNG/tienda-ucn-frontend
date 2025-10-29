@@ -1,9 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { useCheckoutMutation, useGetCart } from "@/hooks/api";
+import {
+  useCheckoutMutation,
+  useCreateOrderMutation,
+  useGetCart,
+} from "@/hooks/api";
 import { handleApiError } from "@/lib";
 import { useCartStore } from "@/stores";
 
@@ -22,9 +27,13 @@ export function useCheckoutView() {
   const [checkoutChanges, setCheckoutChanges] =
     useState<CheckoutChanges | null>(null);
   const [showCheckoutDialog, setShowCheckoutDialog] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
   const hasInitialized = useRef(false);
+
+  // Router
+  const router = useRouter();
 
   // Store
   const { items, setItems, getTotalItems, getTotalPrice } = useCartStore();
@@ -32,12 +41,13 @@ export function useCheckoutView() {
   // API calls
   const { refetch: fetchCart, isLoading: isFetching } = useGetCart();
   const checkoutMutation = useCheckoutMutation();
+  const createOrderMutation = useCreateOrderMutation();
 
   // Computed values
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
   const hasItems = items.length > 0;
-  const isLoading = isFetching || isCreatingOrder;
+  const isLoading = isFetching || isCheckingOut || isCreatingOrder;
   const showSkeletons = isInitializing || isFetching;
 
   // Effects
@@ -108,7 +118,7 @@ export function useCheckoutView() {
   const handleCheckout = async () => {
     if (!hasItems) return;
 
-    setIsCreatingOrder(true);
+    setIsCheckingOut(true);
     try {
       const currentItems = [...items];
       const newCartData = await checkoutMutation.mutateAsync();
@@ -122,15 +132,26 @@ export function useCheckoutView() {
       const apiError = handleApiError(err).details;
       toast.error(apiError || "Error al verificar el carrito");
     } finally {
-      setIsCreatingOrder(false);
+      setIsCheckingOut(false);
     }
   };
 
-  const handleCreateOrder = () => {
+  const handleCreateOrder = async () => {
     setShowCheckoutDialog(false);
-    setCheckoutChanges(null);
-    //TODO: Add order creation logic here
-    toast.success("Pedido creado exitosamente!");
+    setIsCreatingOrder(true);
+
+    try {
+      await createOrderMutation.mutateAsync();
+      toast.success("¡Orden creada exitosamente!");
+      setItems([]);
+      router.push("/orders");
+    } catch (err) {
+      const apiError = handleApiError(err).details;
+      toast.error(apiError || "Error al crear la orden");
+      setCheckoutChanges(null);
+    } finally {
+      setIsCreatingOrder(false);
+    }
   };
 
   const handleCancelCheckout = () => {
@@ -161,6 +182,7 @@ export function useCheckoutView() {
     // Loading states
     isLoading,
     isFetching,
+    isCheckingOut,
     isCreatingOrder,
     isInitializing,
     showSkeletons,

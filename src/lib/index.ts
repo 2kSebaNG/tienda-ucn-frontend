@@ -7,6 +7,7 @@ export {
 } from "./auth";
 export { cn } from "./tailwind";
 export {
+  formatDate,
   hasLegalAge,
   isRutValid,
   isValidId,

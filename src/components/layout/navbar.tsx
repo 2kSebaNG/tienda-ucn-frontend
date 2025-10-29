@@ -121,6 +121,17 @@ export const Navbar = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
+                    {!isAdmin && (
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/orders"
+                          className="flex items-center cursor-pointer"
+                        >
+                          <PackageIcon className="h-4 w-4 mr-2" />
+                          Mis órdenes
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem asChild>
                       <Link
                         href="#"

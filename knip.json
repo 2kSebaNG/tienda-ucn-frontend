@@ -7,12 +7,7 @@
     "postcss.config.*"
   ],
   "project": ["src/**/*.{js,ts,jsx,tsx}", "!src/**/*.d.ts"],
-  "ignoreDependencies": [
-    "pdf-lib",
-    "eslint-config-next",
-    "tw-animate-css",
-    "tailwindcss"
-  ],
+  "ignoreDependencies": ["eslint-config-next", "tw-animate-css", "tailwindcss"],
   "ignore": ["src/components/ui/button.tsx", "src/components/ui/carousel.tsx"],
   "ignoreExportsUsedInFile": true,
   "includeEntryExports": true,

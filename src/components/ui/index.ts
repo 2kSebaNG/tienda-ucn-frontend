@@ -92,5 +92,13 @@ export {
 } from "./sheet";
 export { Skeleton } from "./skeleton";
 export { Switch } from "./switch";
+export {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./table";
 export { Textarea } from "./textarea";
 export { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";

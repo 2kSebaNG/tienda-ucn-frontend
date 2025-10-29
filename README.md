@@ -54,13 +54,13 @@ Once everything is installed, run the project by following the steps in the next
    npx auth secret
    ```
 
-This command will notice that you already have a variable for `AUTH_SECRET` (in this case, that variable is `NEXTAUTH_SECRET`) in your `.env.local file`, so you should enter `y` when it asks **`Overwrite existing AUTH_SECRET? (y/N)`**.
+   This command will notice that you already have a variable for `AUTH_SECRET` (in this case, that variable is `NEXTAUTH_SECRET`) in your `.env.local file`, so you should enter `y` when it asks **`Overwrite existing AUTH_SECRET? (y/N)`**.
 
-If it is not written directly to your `.env.local`, check if the secret was written on the console and then copy it and replace `your-auth-secret-here` in the `NEXTAUTH_SECRET` field. As in the previous step, enclose the secret in double quotes (“ ”) to avoid problems when loading that value.
+   If it is not written directly to your `.env.local`, check if the secret was written on the console and then copy it and replace `your-auth-secret-here` in the `NEXTAUTH_SECRET` field. As in the previous step, enclose the secret in double quotes (“ ”) to avoid problems when loading that value.
 
-```bash
-NEXTAUTH_SECRET=your-auth-secret-here
-```
+   ```bash
+   NEXTAUTH_SECRET=your-auth-secret-here
+   ```
 
 7. Restore the dependencies on a Visual Studio Code terminal.
 
@@ -74,7 +74,7 @@ NEXTAUTH_SECRET=your-auth-secret-here
    npm run dev
    ```
 
-Once you have followed these steps, you will see that the project is running on `http://localhost:3000`. To see the website, press `ctrl` and click that address.
+   Once you have followed these steps, you will see that the project is running on `http://localhost:3000`. To see the website, press `ctrl` and click that address.
 
 ## Backend Repository
 

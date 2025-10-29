@@ -10,6 +10,8 @@ import { queryClient } from "@/providers";
 import { authService } from "@/services/auth-service";
 
 export const useLoginMutation = () => {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: async (data: LoginRequest) => {
       try {
@@ -37,7 +39,7 @@ export const useLoginMutation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth"] });
-      window.location.replace("/products");
+      router.replace("/products");
     },
   });
 };

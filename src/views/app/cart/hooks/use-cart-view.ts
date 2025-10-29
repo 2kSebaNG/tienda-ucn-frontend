@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -17,8 +19,16 @@ export function useCartView() {
   const [clearingCart, setClearingCart] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
+  // Router
+  const router = useRouter();
+
   // Store
   const { items, setItems, getTotalItems, getTotalPrice } = useCartStore();
+
+  // Session management
+  const { data: session } = useSession();
+  const isAuthenticated = !!session?.user;
+  const isAdmin = session?.user?.role.toLowerCase() === "admin";
 
   // API calls
   const {
@@ -116,6 +126,19 @@ export function useCartView() {
     fetchCart();
   };
 
+  // Actions - Redirection
+  const handleRedirectToCheckout = () => {
+    if (!isAuthenticated) {
+      toast.error("Debes iniciar sesión para proceder al checkout");
+      return;
+    }
+    if (isAdmin) {
+      toast.error("Los administradores no pueden realizar compras");
+      return;
+    }
+    router.push("/checkout");
+  };
+
   return {
     // Cart data
     items,
@@ -123,6 +146,12 @@ export function useCartView() {
       totalItems,
       totalPrice,
       hasItems,
+    },
+
+    // Session data
+    session: {
+      isAuthenticated,
+      isAdmin,
     },
 
     // Dialog states
@@ -161,6 +190,9 @@ export function useCartView() {
 
       // Refresh action
       handleRefreshCart,
+
+      // Redirection action
+      handleRedirectToCheckout,
     },
   };
 }

@@ -202,8 +202,7 @@ export const CartDropdown = () => {
             </div>
 
             <div className="flex flex-col mt-3 gap-2">
-              {/* Checkout */}
-
+              {/* Cart detail redirection */}
               <Button
                 className="w-full cursor-pointer"
                 size="sm"

@@ -43,12 +43,12 @@ export function isTokenExpired(
 }
 
 export function isSessionExpired(
-  session: { tokenExp?: number } | null | undefined
+  session: { customExp?: number } | null | undefined
 ): boolean {
-  if (!session?.tokenExp) return true;
+  if (!session?.customExp) return true;
 
   const nowUTC = Math.floor(Date.now() / 1000);
-  const expired = nowUTC >= session.tokenExp;
+  const expired = nowUTC >= session.customExp;
 
   return expired;
 }

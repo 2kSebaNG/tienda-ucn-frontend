@@ -53,7 +53,7 @@ export const authConfig = {
     async session({ session, token }) {
       if (token) {
         session.accessToken = token.accessToken as string;
-        session.tokenExp = token.customExp as number;
+        session.customExp = token.customExp as number;
         session.user.id = token.userId as string;
         session.user.role = token.role as string;
 

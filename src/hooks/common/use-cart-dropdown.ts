@@ -105,11 +105,6 @@ export function useCartDropdown() {
   };
 
   // Actions - Navigation
-  const handleCheckout = () => {
-    setIsOpen(false);
-    router.push("/checkout");
-  };
-
   const handleViewCart = () => {
     setIsOpen(false);
     router.push("/cart");
@@ -169,7 +164,6 @@ export function useCartDropdown() {
       handleClearCart,
 
       // Navigation actions
-      handleCheckout,
       handleViewCart,
 
       // Dropdown actions

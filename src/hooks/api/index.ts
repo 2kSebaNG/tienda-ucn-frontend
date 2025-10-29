@@ -14,6 +14,11 @@ export {
   useUpdateQuantityMutation,
 } from "./use-cart-service";
 export {
+  useCreateOrderMutation,
+  useGetOrderDetail,
+  useGetOrdersList,
+} from "./use-order-service";
+export {
   useCreateProductMutation,
   useGetProductDetail,
   useGetProductsForAdmin,

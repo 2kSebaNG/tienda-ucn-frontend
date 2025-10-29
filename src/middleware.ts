@@ -19,7 +19,6 @@ export async function middleware(request: NextRequest) {
     "/auth/register",
     "/auth/verify-email",
     "/cart",
-    "/checkout",
   ];
 
   const isPublicRoute =

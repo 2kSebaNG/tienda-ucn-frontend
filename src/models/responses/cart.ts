@@ -12,7 +12,7 @@ export interface CartItem {
 export interface GetCartResponse {
   buyerId: string;
   userId: number | null;
-  items: Array<CartItem>;
+  items: CartItem[];
   subTotalPrice: string;
   totalPrice: string;
 }

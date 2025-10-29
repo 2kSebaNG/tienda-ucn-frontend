@@ -1,6 +1,13 @@
 "use client";
 
-import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Info,
+  Minus,
+  Plus,
+  ShoppingBag,
+  Trash2,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,6 +21,7 @@ export default function CartView() {
   const {
     items,
     cart: { totalItems, totalPrice, hasItems },
+    session: { isAdmin, isAuthenticated },
     dialogs: { itemToRemove, clearingCart },
     isLoading,
     actions: {
@@ -24,6 +32,7 @@ export default function CartView() {
       handleClearWithConfirmation,
       handleConfirmClear,
       handleCancelClear,
+      handleRedirectToCheckout,
     },
   } = useCartView();
 
@@ -216,16 +225,26 @@ export default function CartView() {
                   </span>
                 </div>
               </div>
+              <Button
+                className="w-full cursor-pointer"
+                onClick={handleRedirectToCheckout}
+                size="lg"
+                disabled={isLoading || !hasItems || !isAuthenticated || isAdmin}
+              >
+                Proceder al Checkout
+              </Button>
 
-              <Link href={"/checkout"}>
-                <Button
-                  className="w-full mb-3 cursor-pointer"
-                  size="lg"
-                  disabled={isLoading || !hasItems}
-                >
-                  Proceder al Checkout
-                </Button>
-              </Link>
+              {!isAuthenticated ? (
+                <div className="flex items-center gap-2 text-sm text-amber-600 bg-amber-50 dark:bg-amber-950 dark:text-amber-400 px-3 py-2 rounded-md border border-amber-200 dark:border-amber-800">
+                  <Info className="h-4 w-4 flex-shrink-0" />
+                  <span>Debes iniciar sesión para confirmar tu pedido</span>
+                </div>
+              ) : isAdmin ? (
+                <div className="flex items-center gap-2 text-sm text-amber-600 bg-amber-50 dark:bg-amber-950 dark:text-amber-400 px-3 py-2 rounded-md border border-amber-200 dark:border-amber-800">
+                  <Info className="h-4 w-4 flex-shrink-0" />
+                  <span>Los administradores no pueden confirmar pedidos</span>
+                </div>
+              ) : null}
 
               <p className="text-xs text-muted-foreground text-center">
                 Los precios incluyen todos los cargos aplicables

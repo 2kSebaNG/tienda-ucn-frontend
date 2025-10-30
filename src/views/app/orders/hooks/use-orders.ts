@@ -105,7 +105,12 @@ export const useOrders = () => {
       }
       await generateOrderPDF(order);
     } catch (error) {
-      toast.error("Error al descargar el PDF");
+      const errorMessage = (error as Error).message;
+      toast.error(
+        errorMessage
+          ? `Error al descargar el PDF: ${errorMessage}`
+          : "Error al descargar el PDF"
+      );
     }
   };
 

@@ -1,4 +1,4 @@
-import AdminProductsView from "@/views/app/admin/products";
+import { AdminProductsView } from "@/views";
 
 export const metadata = {
   title: "Administración de Productos",

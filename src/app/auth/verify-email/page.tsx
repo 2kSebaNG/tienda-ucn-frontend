@@ -1,4 +1,4 @@
-import VerifyEmailView from "@/views/app/auth/verify-email";
+import { VerifyEmailView } from "@/views";
 
 export const metadata = {
   title: "Verificar Correo - Tienda UCN",

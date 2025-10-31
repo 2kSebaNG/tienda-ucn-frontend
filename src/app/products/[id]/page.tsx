@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 
 import { isValidId } from "@/lib";
 import { productService } from "@/services";
-import { SingleProductView } from "@/views/app/products/[id]";
+import { ProductDetailView } from "@/views";
 
 interface SingleProductPageProps {
   params: Promise<{ id: string }>;
@@ -87,7 +87,7 @@ export default async function SingleProductPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <SingleProductView id={id} />
+      <ProductDetailView id={id} />
     </HydrationBoundary>
   );
 }

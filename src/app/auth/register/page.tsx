@@ -1,4 +1,4 @@
-import RegisterView from "@/views/app/auth/register";
+import { RegisterView } from "@/views";
 
 export const metadata = {
   title: "Registrarse - Tienda UCN",

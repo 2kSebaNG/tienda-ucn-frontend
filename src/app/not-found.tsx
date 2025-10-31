@@ -1,4 +1,4 @@
-import NotFoundView from "@/views/app/not-found-view";
+import { NotFoundView } from "@/views";
 
 export default function NotFound() {
   return <NotFoundView />;

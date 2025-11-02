@@ -1,8 +1,10 @@
 import { MouseEvent, useState } from "react";
 import { toast } from "sonner";
 
-import { useGetProductsForAdmin } from "@/hooks/api";
-import { useToggleProductAvailabilityMutation } from "@/hooks/api/use-product-service";
+import {
+  useGetProductsForAdmin,
+  useToggleProductAvailabilityMutation,
+} from "@/hooks/api";
 import { handleApiError } from "@/lib";
 import { PaginationQueryParams } from "@/models/requests";
 

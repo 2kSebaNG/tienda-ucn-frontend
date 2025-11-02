@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
 import { Footer, Navbar } from "@/components/layout";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui";
 import { ReactQueryProvider } from "@/providers";
 
 const geistSans = Geist({

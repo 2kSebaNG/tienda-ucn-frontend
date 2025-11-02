@@ -1,5 +1,4 @@
-import type { NextAuthConfig } from "next-auth";
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { extractUserFromJwt } from "@/lib";

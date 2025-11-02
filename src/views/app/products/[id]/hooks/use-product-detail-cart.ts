@@ -5,7 +5,7 @@ import {
   useAddItemToCartMutation,
   useUpdateQuantityMutation,
 } from "@/hooks/api";
-import { handleApiError } from "@/lib/api";
+import { handleApiError } from "@/lib";
 import { useCartStore } from "@/stores";
 
 interface UseProductDetailCartProps {

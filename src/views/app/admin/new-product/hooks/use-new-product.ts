@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { useCreateProductMutation } from "@/hooks/api";
-import { handleApiError } from "@/lib/api";
+import { handleApiError } from "@/lib";
 import { CreateProductRequest } from "@/models/requests";
 
 export const useNewProduct = () => {

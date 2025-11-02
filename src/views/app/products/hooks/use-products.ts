@@ -78,7 +78,7 @@ export const useProducts = () => {
   };
 
   const handleRedirectToProductDetail = (productId: number) => {
-    router.push(`/products/product/${productId}`);
+    router.push(`/products/${productId}`);
   };
 
   const handlePreviousPage = (e: MouseEvent<HTMLAnchorElement>) => {

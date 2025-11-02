@@ -1,4 +1,4 @@
-import LoginView from "@/views/app/auth/login";
+import { LoginView } from "@/views";
 
 export const metadata = {
   title: "Inicio de Sesión - Tienda UCN",

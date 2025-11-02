@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/models/generics";
 import { CartItemRequest } from "@/models/requests";
-import { GetCartResponse } from "@/models/responses/cart";
+import { GetCartResponse } from "@/models/responses";
 
 import { BaseApiService } from "./base-api-service";
 

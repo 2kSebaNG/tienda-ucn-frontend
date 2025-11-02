@@ -1,4 +1,4 @@
-import CartView from "@/views/app/cart";
+import { CartView } from "@/views";
 
 export const metadata = {
   title: "Tu carrito de compras",

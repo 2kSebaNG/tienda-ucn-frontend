@@ -15,11 +15,11 @@ import {
 } from "./components";
 import { useProductDetail } from "./hooks";
 
-interface SingleProductViewProps {
+interface ProductDetailViewProps {
   id: string;
 }
 
-export const SingleProductView = ({ id }: SingleProductViewProps) => {
+export default function ProductDetailView({ id }: ProductDetailViewProps) {
   const { productDetail, isLoading, error, actions } = useProductDetail(id);
 
   if (isLoading) {
@@ -64,4 +64,4 @@ export const SingleProductView = ({ id }: SingleProductViewProps) => {
       <ProductDetailsTable product={productDetail} />
     </div>
   );
-};
+}

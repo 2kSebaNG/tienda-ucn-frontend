@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-import { axiosInstance } from "@/providers/axios-provider";
+import { axiosInstance } from "@/providers";
 
 export abstract class BaseApiService {
   protected readonly baseURL: string;

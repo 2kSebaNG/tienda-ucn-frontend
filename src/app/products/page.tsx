@@ -1,4 +1,4 @@
-import ProductsView from "@/views/app/products";
+import { ProductsView } from "@/views";
 
 export const metadata = {
   title: "Productos - Tienda UCN",

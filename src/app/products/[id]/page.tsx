@@ -8,16 +8,16 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { isValidId } from "@/lib";
-import { productService } from "@/services/product-service";
-import { SingleProductView } from "@/views/app/products/product/[id]";
+import { productService } from "@/services";
+import { ProductDetailView } from "@/views";
 
-interface SingleProductPageProps {
+interface ProductDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({
   params,
-}: SingleProductPageProps): Promise<Metadata> {
+}: ProductDetailPageProps): Promise<Metadata> {
   const { id } = await params;
 
   if (!isValidId(id)) {
@@ -60,9 +60,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function SingleProductPage({
+export default async function ProductDetailPage({
   params,
-}: SingleProductPageProps) {
+}: ProductDetailPageProps) {
   const { id } = await params;
 
   if (!isValidId(id)) {
@@ -87,7 +87,7 @@ export default async function SingleProductPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <SingleProductView id={id} />
+      <ProductDetailView id={id} />
     </HydrationBoundary>
   );
 }

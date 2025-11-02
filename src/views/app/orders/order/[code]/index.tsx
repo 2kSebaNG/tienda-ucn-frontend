@@ -4,8 +4,7 @@ import { ArrowLeft, Calendar, Download, Package, Receipt } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button, Card } from "@/components/ui";
 import { formatDate, thousandSeparatorPipe } from "@/lib";
 
 import { OrderDetailErrorState, OrderDetailSkeleton } from "./components";

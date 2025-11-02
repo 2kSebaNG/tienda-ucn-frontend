@@ -1,4 +1,4 @@
-import CheckoutView from "@/views/app/checkout";
+import { CheckoutView } from "@/views";
 
 export const metadata = {
   title: "Checkout de la compra",

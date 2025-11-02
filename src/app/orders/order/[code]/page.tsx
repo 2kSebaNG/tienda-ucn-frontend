@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import OrderDetailView from "@/views/app/orders/order/[code]";
+import { OrderDetailView } from "@/views";
 
 interface OrderDetailPageProps {
   params: Promise<{ code: string }>;

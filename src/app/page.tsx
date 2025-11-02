@@ -1,4 +1,4 @@
-import HomeView from "@/views/app";
+import { HomeView } from "@/views";
 
 export default function HomePage() {
   return <HomeView />;

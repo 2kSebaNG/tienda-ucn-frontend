@@ -1,6 +1,6 @@
 import { AlertCircle, ArrowLeft } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 
 interface OrderDetailErrorStateProps {
   errorDetail: string;

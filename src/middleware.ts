@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-import { getPublicRouteFromAdmin, isTokenExpired } from "@/lib/auth";
+import { getPublicRouteFromAdmin, isTokenExpired } from "@/lib";
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
   ];
 
   const isPublicRoute =
-    publicRoutes.includes(path) || path.startsWith("/products/product/");
+    publicRoutes.includes(path) || path.startsWith("/products");
 
   const isAuthRoute = path.startsWith("/auth/");
   const isAdminRoute = path.startsWith("/admin/");
@@ -65,7 +65,7 @@ export async function middleware(request: NextRequest) {
       const publicRoutesForRedirect = ["/", "/products"];
       const canRedirectToPublic =
         publicRoutesForRedirect.includes(publicRoute) ||
-        publicRoute.startsWith("/products/product/");
+        publicRoute.startsWith("/products");
 
       // If the public route is a valid redirect, perform the redirect
       if (canRedirectToPublic) {

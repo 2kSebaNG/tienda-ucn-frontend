@@ -1,4 +1,4 @@
-import OrdersView from "@/views/app/orders";
+import { OrdersView } from "@/views";
 
 export const metadata = {
   title: "Tus órdenes de compra",

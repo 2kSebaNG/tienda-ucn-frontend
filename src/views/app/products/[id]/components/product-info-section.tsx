@@ -92,7 +92,7 @@ export const ProductInfoSection = ({
               onClick={handleResetQuantity}
               disabled={!canResetQuantity || isAdding}
             >
-              Reset
+              Restablecer
             </Button>
 
             <Button
@@ -134,7 +134,7 @@ export const ProductInfoSection = ({
               onClick={handleSetMax}
               disabled={!canSetMax || isAdding}
             >
-              Max
+              Máximo
             </Button>
           </div>
         </div>
